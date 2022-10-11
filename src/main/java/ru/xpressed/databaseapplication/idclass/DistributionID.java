@@ -1,13 +1,11 @@
 package ru.xpressed.databaseapplication.idclass;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 public class DistributionID implements Serializable {
     private int ID_Order;
     private int ID_Waiter;

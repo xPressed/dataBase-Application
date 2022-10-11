@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <title>Client</title>
+  <link rel="icon" th:href="@{/icons/elephant2.png}">
+
+  <script>
+    function closeIFrame() {
+      location.href = "/client";
+    }
+  </script>
+</head>
+<body>
+<div class="my-4 container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-11 col-xl-11">
+      <div style="background-color: white; border-radius: 25px; overflow: hidden"
+           th:attrappend="style=|; filter: blur(${blur})|">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <img alt="elephant?" class="d-block mx-5" width="75px" src="../../static/icons/elephant.png"
+               th:src="@{/icons/elephant.png}">
+          <a class="display-4" style="color: black" href="/index">Elephant Restaurants</a>
+          <button class="navbar-toggler" style="border: 2px solid #5700f7; border-radius: 20px" type="button"
+                  data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link h4 px-4 mt-3" href="/home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link h4 px-4 mt-3"
+                   style="color: white; background-color: #5700f7; border-radius: 30px" href="/tables">Tables</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle h4 px-4 mt-3" id="navbarDropdownMenuLink"
+                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   th:text="${username}"></a>
+                <div class="dropdown-menu dropdown-menu-right p-0" style="border: none"
+                     aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item mb-2" th:attr="href=${linkInOrAccount}"
+                     style="background-color: #5700f7; color: white; border-radius: 25px"
+                     th:text="${textInOrAccount}">LogIn</a>
+                  <a class="dropdown-item" th:attr="href=${linkOutOrUp}"
+                     style="background-color: grey; color: white; border-radius: 25px"
+                     th:text="${textOutOrUp}">LogOut</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <hr class="mx-3" style="background-color: #5700f7">
+
+        <div class="row justify-content-center text-center">
+          <div class="col-12">
+            <p class="h1 my-4">Таблица "Client"</p>
+
+            <div class="d-flex justify-content-center m-3 pb-3">
+              <button type="submit" class="btn btn-secondary btn-lg"
+                      style="background-color: #5700f7; border-color: white; border-radius: 30px" onclick="location.href='/client?add'">Add new Client
+              </button>
+            </div>
+
+            <div class="h4 row">
+              <div class="col-1 ml-4">ID_Client</div>
+              <div class="col-3 col-xl-2">ID_Order</div>
+              <div class="col-2 col-xl-3">Surname</div>
+              <div class="col-2 col-xl-3">Name</div>
+              <div class="col-3 col-xl-2 mr-4">Patronymic</div>
+            </div>
+            <hr class="mx-3" style="background-color: #5700f7">
+
+            <div class="h4" th:each="row : ${rows}">
+              <div class="row">
+                <div class="col-1 ml-4 mt-2" th:text="${row.ID_Client}">a</div>
+                <div class="col-3 col-xl-2 mt-2" th:text="${row.ID_Order}">b</div>
+                <div class="col-2 col-xl-3 mt-2" th:text="${row.surname}">c</div>
+                <div class="col-2 col-xl-3 mt-2" th:text="${row.name}">d</div>
+                <div class="col-3 col-xl-2 mr-4 mt-2" th:text="${row.patronymic}">e</div>
+
+                  <button type="button" th:attr="onclick=|location.href='/client/delete?id=${row.ID_Client}'|" title="Delete" class="btn btn-secondary btn-lg mr-4" style="color: black; background-color: white; border: 3px solid red; border-radius: 20px; position: absolute; right: 0">X</button>
+                  <button type="button" th:attr="onclick=|location.href='/client?update=${row.ID_Client}'|" title="Update" class="btn btn-secondary btn-lg mr-4 p-2" style="color: black; background-color: white; border: 3px solid #5700f7; border-radius: 20px; position: absolute; right: 55px">⚙</button>
+              </div>
+              <hr class="mx-3 mt-4" style="background-color: #5700f7">
+            </div>
+
+            <p class="h3 font-weight-normal mb-5 mt-3 text-center" style="color: #5700f7"> Вы можете выбрать любую таблицу для просмотра и редактирования! </p>
+
+          </div>
+        </div>
+        <footer class="footer py-3"
+                style="background-color: #5700f7; color: white; border-radius: 25px">
+          <div class="mx-5">
+            <div class="row justify-content-center text-center">
+              <div class="col">Contacts! Just in case...</div>
+            </div>
+            <div class="row justify-content-center text-center">
+              <div class="col-6 col-xl-3">Звягинцев М.Е.</div>
+              <div class="col-6 col-xl-3">ИКБО-16-20</div>
+              <div class="col-6 col-xl-3">
+                <img alt="vk?" class="mx-auto" width="30px" src="../../static/icons/vk.png"
+                     th:src="@{/icons/vk.png}">
+                <a class="text-light" target="_blank" href="https://vk.com/max.zvyagincev">vk.com/max.zvyagincev</a>
+              </div>
+              <div class="col-6 col-xl-3">
+                <img alt="telegram?" class="mx-auto" width="30px"
+                     src="../../static/icons/telegram.png" th:src="@{/icons/telegram.png}">
+                <a class="text-light" target="_blank" href="https://t.me/max_zvyagincev">t.me/max_zvyagincev</a>
+              </div>
+            </div>
+            <div class="row justify-content-center text-center">
+              <div class="col-6 col-xl-3">
+                <img alt="github?" class="mx-auto" width="30px" src="../../static/icons/mail.png"
+                     th:src="@{/icons/mail.png}">
+                maxim@zvyagincev.tk
+              </div>
+              <div class="col-6 col-xl-3">
+                <img alt="github?" class="mx-auto" width="30px" src="../../static/icons/mail.png"
+                     th:src="@{/icons/mail.png}">
+                max.zvyagincev@gmail.com
+              </div>
+              <div class="col-6 col-xl-3">
+                <img alt="github?" class="mx-auto" width="30px" src="../../static/icons/github.png"
+                     th:src="@{/icons/github.png}">
+                <a class="text-light" target="_blank" href="https://github.com/xPressed">github.com/xPressed</a>
+              </div>
+              <div class="col-6 col-xl-3">All rights reserved © 2021-2023</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <iframe th:if="${param.account}" src="/account" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"></iframe>
+    <iframe th:if="${param.add}" src="/client/add" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"></iframe>
+    <iframe th:if="${param.update}" th:attr="src=|@{/client/update(id=${param.update[0]})}|" style="width: 100%; height: 100%; position: absolute; left:0; top:0; border: none"></iframe>
+
+  </div>
+</div>
+
+</body>
+</html>

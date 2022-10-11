@@ -92,3 +92,12 @@ CREATE TABLE IF NOT EXISTS Positions
     FOREIGN KEY R_3 (ID_Menu) REFERENCES Menu (ID_Menu),
     FOREIGN KEY R_4 (ID_Dish) REFERENCES Dish (ID_Dish)
 );
+
+
+
+CREATE TABLE IF NOT EXISTS User
+(
+    username            VARCHAR(100) NOT NULL,
+    password            VARCHAR(100) NOT NULL,
+    PRIMARY KEY (username)
+);

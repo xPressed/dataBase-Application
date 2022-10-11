@@ -1,14 +1,12 @@
 package ru.xpressed.databaseapplication.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Waiter {
     @Id
@@ -19,17 +17,4 @@ public class Waiter {
     private String Gender;
     private Date DateOfBirth;
     private int ID_Shift;
-
-    @Override
-    public String toString() {
-        return "Waiter{" +
-                "ID_Waiter=" + ID_Waiter +
-                ", Surname='" + Surname + '\'' +
-                ", Name='" + Name + '\'' +
-                ", Patronymic='" + Patronymic + '\'' +
-                ", Gender='" + Gender + '\'' +
-                ", DateOfBirth=" + DateOfBirth +
-                ", ID_Shift=" + ID_Shift +
-                '}';
-    }
 }

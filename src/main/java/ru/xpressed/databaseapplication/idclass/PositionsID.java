@@ -1,13 +1,11 @@
 package ru.xpressed.databaseapplication.idclass;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 public class PositionsID implements Serializable {
     private int ID_Menu;
     private int ID_Dish;

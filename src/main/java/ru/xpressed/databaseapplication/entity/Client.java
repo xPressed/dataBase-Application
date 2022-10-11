@@ -1,30 +1,26 @@
 package ru.xpressed.databaseapplication.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Client {
     @Id
     private int ID_Client;
-    private int ID_Order;
-    private String Surname;
-    private String Name;
-    private String Patronymic;
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "ID_Client=" + ID_Client +
-                ", ID_Order=" + ID_Order +
-                ", Surname='" + Surname + '\'' +
-                ", Name='" + Name + '\'' +
-                ", Patronymic='" + Patronymic + '\'' +
-                '}';
-    }
+    @NotNull(message = "ID of Order can not be null!")
+    private int ID_Order;
+
+    @NotEmpty(message = "Surname can not be empty!")
+    private String Surname;
+
+    @NotEmpty(message = "Name can not be empty!")
+    private String Name;
+
+    private String Patronymic;
 }

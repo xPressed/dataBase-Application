@@ -72,6 +72,7 @@ public class DataBaseApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("Welcome to the Restaurant's inner CLI\n" +
+                "Web Interface is ready on port 8080\n" +
                 "Please, consider reading HELP info! [ help ]");
 
         loop: while (true) {
@@ -110,7 +111,7 @@ public class DataBaseApplication implements CommandLineRunner {
 
                     case "exit" -> {
                         System.out.println("Application is shutting down!");
-                        break loop;
+                        System.exit(0);
                     }
 
                     case "get" -> {
