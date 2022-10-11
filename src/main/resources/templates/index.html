@@ -21,6 +21,11 @@
             location.href = "/index";
         }
     </script>
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="my-4 container-fluid">
@@ -78,35 +83,37 @@
 
                 <div class="row justify-content-center text-center">
                     <div class="col-10 col-xl-5">
-                        <p class="h3 font-weight-normal my-4"> Быстро? Качественно? Elephant Express! </p>
-                        <img alt="map?" class="mx-auto" width="100%" src="../static/images/map.png"
-                             th:src="@{/images/map.png}">
-                        <p class="h3 font-weight-normal my-4"> Во все населенные точки мира! </p>
-                        <p class="h3 font-weight-normal my-4" style="color: #5700f7"> А иногда даже дальше... </p>
+                        <p class="h1 font-weight-normal my-4" style="color: #5700f7"> Elephant Restaurant's inner <br> Web-Application </p>
+                        <p class="h2 font-weight-normal my-4"> Для доступа ко всем функциям пройдите регистрацию! </p>
+                        <p class="h4 font-weight-normal my-4"> После выполнения регистрации обратитесь к администратору для получения доступа. </p>
                     </div>
                 </div>
                 <hr class="mx-3">
 
                 <div class="row justify-content-center text-center mb-3">
                     <div class="col-10 col-xl-5">
-                        <p class="h3 font-weight-normal my-3"> Услуги, предоставляемые компанией </p>
+                        <p class="h3 font-weight-normal my-3"> Функции Веб-Приложения </p>
                         <div class="h4 font-weight-normal">
                             <img alt="leaf?" class="mx-auto" width="30px" src="../static/icons/leaf.png"
                                  th:src="@{/icons/leaf.png}">
-                            Логистика
+                            Просмотр существующих таблиц
                         </div>
                         <div class="h4 font-weight-normal">
                             <img alt="leaf?" class="mx-auto" width="30px" src="../static/icons/leaf.png"
                                  th:src="@{/icons/leaf.png}">
-                            Курьерские и почтовые доставки
+                            Добалвние новых записей
                         </div>
                         <div class="h4 font-weight-normal">
                             <img alt="leaf?" class="mx-auto" width="30px" src="../static/icons/leaf.png"
                                  th:src="@{/icons/leaf.png}">
-                            Взаимодейтсвие с другими компаниями
+                            Изменение старых записей
                         </div>
-                        <p class="h3 font-weight-normal my-4" style="color: #5700f7"> Специалисты все сделают за
-                            вас! </p>
+                        <div class="h4 font-weight-normal">
+                            <img alt="leaf?" class="mx-auto" width="30px" src="../static/icons/leaf.png"
+                                 th:src="@{/icons/leaf.png}">
+                            Удаление не нужных записей
+                        </div>
+                        <p class="h3 font-weight-normal my-4" style="color: #5700f7"> Обратите внимание на невозможность отмены внесенных изменений! </p>
                     </div>
                 </div>
 

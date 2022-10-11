@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import ru.xpressed.databaseapplication.entity.User;
 import ru.xpressed.databaseapplication.repository.*;
 
 import java.sql.Date;
@@ -28,6 +29,7 @@ public class DataBaseApplication implements CommandLineRunner {
     private PositionsRepository positionsRepository;
     private ShiftRepository shiftRepository;
     private WaiterRepository waiterRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public void setPositionsRepository(PositionsRepository positionsRepository) {
@@ -69,13 +71,19 @@ public class DataBaseApplication implements CommandLineRunner {
         this.orderRepository = orderRepository;
     }
 
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public void run(String... args) {
-        System.out.println("Welcome to the Restaurant's inner CLI\n" +
-                "Web Interface is ready on port 8080\n" +
-                "Please, consider reading HELP info! [ help ]");
+        System.out.println("""
+                Welcome to the Restaurant's inner CLI
+                Web Interface is ready on port 8080
+                Please, consider reading HELP info! [ help ]""");
 
-        loop: while (true) {
+        while (true) {
             System.out.print("\ncommand > ");
             String input = scanner.nextLine();
 
@@ -107,11 +115,49 @@ public class DataBaseApplication implements CommandLineRunner {
                             \t[ -p ... ]\t\tParametrized values to insert. Try any command for hint.
                             
                             delete\t\tDelete record from any table.
-                            \t[ -i ... ]\t\tSearch for record by ID or IDs.""");
+                            \t[ -r ... ]\t\tKey for choosing repository
+                            \t(Client, Dish, Distribution, Menu, Order, Positions, Shift, Waiter).
+                            \t[ -i ... ]\t\tSearch for record by ID or IDs.
+                            
+                            enable\t\tGrants access to any user.
+                            \t[ -u ... ]\t\tUser's username.
+                            
+                            disable\t\tRetrieves access from any user.
+                            \t[ -u ... ]\t\tUser's username.""");
 
                     case "exit" -> {
                         System.out.println("Application is shutting down!");
                         System.exit(0);
+                    }
+
+                    case "enable" -> {
+                        if (commands.get("-u") != null) {
+                            try {
+                                User user = userRepository.findByUsername(commands.get("-u"));
+                                user.setEnabled(true);
+                                userRepository.save(user);
+                                System.out.println("User \"" + commands.get("-u") + "\" was enabled!");
+                            } catch (Exception e) {
+                                System.out.println("Something went wrong!");
+                            }
+                        } else {
+                            System.out.println("Wrong usage of [ enable ]");
+                        }
+                    }
+
+                    case "disable" -> {
+                        if (commands.get("-u") != null) {
+                            try {
+                                User user = userRepository.findByUsername(commands.get("-u"));
+                                user.setEnabled(false);
+                                userRepository.save(user);
+                                System.out.println("User \"" + commands.get("-u") + "\" was disabled!");
+                            } catch (Exception e) {
+                                System.out.println("Something went wrong!");
+                            }
+                        } else {
+                            System.out.println("Wrong usage of [ disable ]");
+                        }
                     }
 
                     case "get" -> {

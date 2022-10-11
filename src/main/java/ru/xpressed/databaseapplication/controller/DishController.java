@@ -37,7 +37,7 @@ public class DishController {
         model.addAttribute("username", request.getUserPrincipal().getName());
         model.addAttribute("linkOutOrUp", "/logout");
         model.addAttribute("textOutOrUp", "LogOut");
-        model.addAttribute("linkInOrAccount", "/client?account");
+        model.addAttribute("linkInOrAccount", "/dish?account");
         model.addAttribute("textInOrAccount", "Account");
 
         model.addAttribute("rows", dishRepository.findAll());
@@ -57,9 +57,9 @@ public class DishController {
             return "/dish/update";
         }
         try {
-            dishRepository.insert(dish.getType(), dish.getCalories(), dish.getCompound(), dish.getPrice());
             dishRepository.delete(id);
-            model.addAttribute("message", "Client Updated!");
+            dishRepository.insert(dish.getType(), dish.getCalories(), dish.getCompound(), dish.getPrice());
+            model.addAttribute("message", "Dish Updated!");
         } catch (Exception e) {
             model.addAttribute("message2", "Something went Wrong!");
         }
@@ -80,7 +80,7 @@ public class DishController {
         }
         try {
             dishRepository.insert(dish.getType(), dish.getCalories(), dish.getCompound(), dish.getPrice());
-            model.addAttribute("message", "New Client Added!");
+            model.addAttribute("message", "New Dish Added!");
         } catch (Exception e) {
             model.addAttribute("message2", "Something went Wrong!");
         }
@@ -89,7 +89,11 @@ public class DishController {
 
     @GetMapping("/dish/delete")
     public String deleteClient(@RequestParam("id") int id) {
-        dishRepository.delete(id);
+        try {
+            dishRepository.delete(id);
+        } catch (Exception e) {
+            return "redirect:/dish?depend";
+        }
         return "redirect:/dish";
     }
 }

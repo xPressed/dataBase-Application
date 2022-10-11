@@ -21,6 +21,11 @@
       location.href = "/client";
     }
   </script>
+  <style>
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 <div class="my-4 container-fluid">
@@ -28,6 +33,9 @@
     <div class="col-11 col-xl-11">
       <div style="background-color: white; border-radius: 25px; overflow: hidden"
            th:attrappend="style=|; filter: blur(${blur})|">
+        <div th:if="${param.depend}" class="mr-5" style="color: red; position: absolute; right: 0">Modifying
+          record with dependencies detected! Check other tables!
+        </div>
         <nav class="navbar navbar-expand-lg navbar-light">
           <img alt="elephant?" class="d-block mx-5" width="75px" src="../../static/icons/elephant.png"
                th:src="@{/icons/elephant.png}">
@@ -98,7 +106,7 @@
               <hr class="mx-3 mt-4" style="background-color: #5700f7">
             </div>
 
-            <p class="h3 font-weight-normal mb-5 mt-3 text-center" style="color: #5700f7"> Вы можете выбрать любую таблицу для просмотра и редактирования! </p>
+            <p class="h3 font-weight-normal mb-5 mt-3 text-center" style="color: #5700f7"> Изменения в таблице являются необратимыми! </p>
 
           </div>
         </div>

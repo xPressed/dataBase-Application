@@ -99,5 +99,6 @@ CREATE TABLE IF NOT EXISTS User
 (
     username            VARCHAR(100) NOT NULL,
     password            VARCHAR(100) NOT NULL,
+    enabled             TINYINT(1) NOT NULL,
     PRIMARY KEY (username)
 );

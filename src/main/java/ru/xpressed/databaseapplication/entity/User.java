@@ -22,6 +22,8 @@ public class User implements UserDetails {
     @NotEmpty(message = "Password can not be empty!")
     private String password;
 
+    private Boolean enabled;
+
     @Transient
     private String repeated;
 
@@ -50,6 +52,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

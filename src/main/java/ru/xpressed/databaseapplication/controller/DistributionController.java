@@ -26,7 +26,7 @@ public class DistributionController {
     @GetMapping("/distribution")
     public String showDishPage(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
-                               @RequestParam("update") Optional<Integer> update,
+                               @RequestParam("update") Optional<String> update,
                                @RequestParam("add") Optional<String> add) {
         if (account.isPresent() | update.isPresent() | add.isPresent()) {
             model.addAttribute("blur", "5px");
@@ -37,7 +37,7 @@ public class DistributionController {
         model.addAttribute("username", request.getUserPrincipal().getName());
         model.addAttribute("linkOutOrUp", "/logout");
         model.addAttribute("textOutOrUp", "LogOut");
-        model.addAttribute("linkInOrAccount", "/client?account");
+        model.addAttribute("linkInOrAccount", "/distribution?account");
         model.addAttribute("textInOrAccount", "Account");
 
         model.addAttribute("rows", distributionRepository.findAll());
@@ -45,20 +45,20 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int[] id) {
-        model.addAttribute("distribution", distributionRepository.find(id[0], id[1]));
+    public String showClientUpdatePage(Model model, @RequestParam("id") String id) {
+        model.addAttribute("distribution", distributionRepository.find(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1])).get(0));
         return "/distribution/update";
     }
 
     @PostMapping("/distribution/update")
-    public String completeClientUpdate(@Valid Distribution distribution, BindingResult bindingResult, Model model, @RequestParam("id") int[] id) {
+    public String completeClientUpdate(@Valid Distribution distribution, BindingResult bindingResult, Model model, @RequestParam("id") String id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("distribution", distribution);
             return "/distribution/update";
         }
         try {
+            distributionRepository.delete(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1]));
             distributionRepository.insert(distribution.getID_Order(), distribution.getID_Waiter());
-            distributionRepository.delete(id[0], id[1]);
             model.addAttribute("message", "Client Updated!");
         } catch (Exception e) {
             model.addAttribute("message2", "Something went Wrong!");
@@ -80,7 +80,7 @@ public class DistributionController {
         }
         try {
             distributionRepository.insert(distribution.getID_Order(), distribution.getID_Waiter());
-            model.addAttribute("message", "New Client Added!");
+            model.addAttribute("message", "New Distribution Added!");
         } catch (Exception e) {
             model.addAttribute("message2", "Something went Wrong!");
         }
@@ -88,8 +88,12 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution/delete")
-    public String deleteClient(@RequestParam("id") int[] id) {
-        distributionRepository.delete(id[0], id[1]);
+    public String deleteClient(@RequestParam("id") String id) {
+        try {
+            distributionRepository.delete(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1]));
+        } catch (Exception e) {
+            return "redirect:/distribution?depend";
+        }
         return "redirect:/distribution";
     }
 }

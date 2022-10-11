@@ -52,6 +52,7 @@ public class RegistrationController {
 
         if (userRepository.findByUsername(user.getUsername()) == null) {
             user.setPassword(securityConfiguration.encoder().encode(user.getPassword()));
+            user.setEnabled(false);
             userRepository.save(user);
             model.addAttribute("message", "Registration Completed");
             model.addAttribute("onload", "redirectTimer()");

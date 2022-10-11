@@ -55,8 +55,8 @@ public class ClientController {
             return "/client/update";
         }
         try {
-            clientRepository.insert(client.getID_Order(), client.getSurname(), client.getName(), client.getPatronymic());
             clientRepository.delete(id);
+            clientRepository.insert(client.getID_Order(), client.getSurname(), client.getName(), client.getPatronymic());
             model.addAttribute("message", "Client Updated!");
         } catch (Exception e) {
             model.addAttribute("message2", "Something went Wrong!");
@@ -87,7 +87,11 @@ public class ClientController {
 
     @GetMapping("/client/delete")
     public String deleteClient(@RequestParam("id") int id) {
-        clientRepository.delete(id);
+        try {
+            clientRepository.delete(id);
+        } catch (Exception e) {
+            return "redirect:/client?depend";
+        }
         return "redirect:/client";
     }
 }
