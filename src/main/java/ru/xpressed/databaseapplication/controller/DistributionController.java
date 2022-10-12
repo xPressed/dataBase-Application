@@ -24,7 +24,7 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
                                @RequestParam("update") Optional<String> update,
                                @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") String id) {
+    public String getUpdate(Model model, @RequestParam("id") String id) {
         model.addAttribute("distribution", distributionRepository.find(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1])).get(0));
         return "/distribution/update";
     }
 
     @PostMapping("/distribution/update")
-    public String completeClientUpdate(@Valid Distribution distribution, BindingResult bindingResult, Model model, @RequestParam("id") String id) {
+    public String postUpdate(@Valid Distribution distribution, BindingResult bindingResult, Model model, @RequestParam("id") String id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("distribution", distribution);
             return "/distribution/update";
@@ -67,13 +67,13 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("distribution", new Distribution());
         return "/distribution/add";
     }
 
     @PostMapping("/distribution/add")
-    public String completeClientAdd(@Valid Distribution distribution, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Distribution distribution, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("distribution", distribution);
             return "/distribution/add";
@@ -88,7 +88,7 @@ public class DistributionController {
     }
 
     @GetMapping("/distribution/delete")
-    public String deleteClient(@RequestParam("id") String id) {
+    public String delete(@RequestParam("id") String id) {
         try {
             distributionRepository.delete(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1]));
         } catch (Exception e) {

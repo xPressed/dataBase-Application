@@ -24,7 +24,7 @@ public class MenuController {
     }
 
     @GetMapping("/menu")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
                                @RequestParam("update") Optional<Integer> update,
                                @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class MenuController {
     }
 
     @GetMapping("/menu/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("menu", menuRepository.find(id));
         return "/menu/update";
     }
 
     @PostMapping("/menu/update")
-    public String completeClientUpdate(@Valid Menu menu, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Menu menu, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("menu", menu);
             return "/menu/update";
@@ -67,13 +67,13 @@ public class MenuController {
     }
 
     @GetMapping("/menu/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("menu", new Menu());
         return "/menu/add";
     }
 
     @PostMapping("/menu/add")
-    public String completeClientAdd(@Valid Menu menu, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Menu menu, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("menu", menu);
             return "/menu/add";
@@ -88,7 +88,7 @@ public class MenuController {
     }
 
     @GetMapping("/menu/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             menuRepository.delete(id);
         } catch (Exception e) {

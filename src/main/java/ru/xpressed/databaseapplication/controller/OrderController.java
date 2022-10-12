@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping("/order")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
                                @RequestParam("update") Optional<Integer> update,
                                @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class OrderController {
     }
 
     @GetMapping("/order/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("order", orderRepository.find(id));
         return "/order/update";
     }
 
     @PostMapping("/order/update")
-    public String completeClientUpdate(@Valid Order order, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Order order, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("order", order);
             return "/order/update";
@@ -67,13 +67,13 @@ public class OrderController {
     }
 
     @GetMapping("/order/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("order", new Order());
         return "/order/add";
     }
 
     @PostMapping("/order/add")
-    public String completeClientAdd(@Valid Order order, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Order order, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("order", order);
             return "/order/add";
@@ -88,7 +88,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             orderRepository.delete(id);
         } catch (Exception e) {

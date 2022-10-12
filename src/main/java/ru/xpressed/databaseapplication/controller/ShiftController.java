@@ -24,7 +24,7 @@ public class ShiftController {
     }
 
     @GetMapping("/shift")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
                                @RequestParam("update") Optional<Integer> update,
                                @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class ShiftController {
     }
 
     @GetMapping("/shift/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("shift", shiftRepository.find(id));
         return "/shift/update";
     }
 
     @PostMapping("/shift/update")
-    public String completeClientUpdate(@Valid Shift shift, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Shift shift, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("shift", shift);
             return "/shift/update";
@@ -67,13 +67,13 @@ public class ShiftController {
     }
 
     @GetMapping("/shift/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("shift", new Shift());
         return "/shift/add";
     }
 
     @PostMapping("/shift/add")
-    public String completeClientAdd(@Valid Shift shift, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Shift shift, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("shift", shift);
             return "/shift/add";
@@ -88,7 +88,7 @@ public class ShiftController {
     }
 
     @GetMapping("/shift/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             shiftRepository.delete(id);
         } catch (Exception e) {

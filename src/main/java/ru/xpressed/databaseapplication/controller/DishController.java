@@ -24,7 +24,7 @@ public class DishController {
     }
 
     @GetMapping("/dish")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                  @RequestParam("account") Optional<String> account,
                                  @RequestParam("update") Optional<Integer> update,
                                  @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class DishController {
     }
 
     @GetMapping("/dish/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("dish", dishRepository.find(id));
         return "/dish/update";
     }
 
     @PostMapping("/dish/update")
-    public String completeClientUpdate(@Valid Dish dish, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Dish dish, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("dish", dish);
             return "/dish/update";
@@ -67,13 +67,13 @@ public class DishController {
     }
 
     @GetMapping("/dish/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("dish", new Dish());
         return "/dish/add";
     }
 
     @PostMapping("/dish/add")
-    public String completeClientAdd(@Valid Dish dish, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Dish dish, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("dish", dish);
             return "/dish/add";
@@ -88,7 +88,7 @@ public class DishController {
     }
 
     @GetMapping("/dish/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             dishRepository.delete(id);
         } catch (Exception e) {

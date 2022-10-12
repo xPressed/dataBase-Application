@@ -24,7 +24,7 @@ public class PositionsController {
     }
 
     @GetMapping("/positions")
-    public String showDishPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                @RequestParam("account") Optional<String> account,
                                @RequestParam("update") Optional<String> update,
                                @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class PositionsController {
     }
 
     @GetMapping("/positions/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") String id) {
+    public String getUpdate(Model model, @RequestParam("id") String id) {
         model.addAttribute("positions", positionsRepository.find(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1])).get(0));
         return "/positions/update";
     }
 
     @PostMapping("/positions/update")
-    public String completeClientUpdate(@Valid Positions positions, BindingResult bindingResult, Model model, @RequestParam("id") String id) {
+    public String postUpdate(@Valid Positions positions, BindingResult bindingResult, Model model, @RequestParam("id") String id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("positions", positions);
             return "/positions/update";
@@ -67,13 +67,13 @@ public class PositionsController {
     }
 
     @GetMapping("/positions/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("positions", new Positions());
         return "/positions/add";
     }
 
     @PostMapping("/positions/add")
-    public String completeClientAdd(@Valid Positions positions, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Positions positions, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("positions", positions);
             return "/positions/add";
@@ -88,7 +88,7 @@ public class PositionsController {
     }
 
     @GetMapping("/positions/delete")
-    public String deleteClient(@RequestParam("id") String id) {
+    public String delete(@RequestParam("id") String id) {
         try {
             positionsRepository.delete(Integer.parseInt(id.split(",")[0]), Integer.parseInt(id.split(",")[1]));
         } catch (Exception e) {

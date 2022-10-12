@@ -22,7 +22,7 @@ public class ClientController {
     }
 
     @GetMapping("/client")
-    public String showClientPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                  @RequestParam("account") Optional<String> account,
                                  @RequestParam("update") Optional<Integer> update,
                                  @RequestParam("add") Optional<String> add) {
@@ -43,13 +43,13 @@ public class ClientController {
     }
 
     @GetMapping("/client/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("client", clientRepository.find(id));
         return "/client/update";
     }
 
     @PostMapping("/client/update")
-    public String completeClientUpdate(@Valid Client client, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Client client, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("client", client);
             return "/client/update";
@@ -65,13 +65,13 @@ public class ClientController {
     }
 
     @GetMapping("/client/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("client", new Client());
         return "/client/add";
     }
 
     @PostMapping("/client/add")
-    public String completeClientAdd(@Valid Client client, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Client client, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("client", client);
             return "/client/add";
@@ -86,7 +86,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             clientRepository.delete(id);
         } catch (Exception e) {

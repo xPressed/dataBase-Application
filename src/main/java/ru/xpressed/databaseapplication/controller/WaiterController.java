@@ -24,7 +24,7 @@ public class WaiterController {
     }
 
     @GetMapping("/waiter")
-    public String showClientPage(Model model, HttpServletRequest request,
+    public String show(Model model, HttpServletRequest request,
                                  @RequestParam("account") Optional<String> account,
                                  @RequestParam("update") Optional<Integer> update,
                                  @RequestParam("add") Optional<String> add) {
@@ -45,13 +45,13 @@ public class WaiterController {
     }
 
     @GetMapping("/waiter/update")
-    public String showClientUpdatePage(Model model, @RequestParam("id") int id) {
+    public String getUpdate(Model model, @RequestParam("id") int id) {
         model.addAttribute("waiter", waiterRepository.find(id));
         return "/waiter/update";
     }
 
     @PostMapping("/waiter/update")
-    public String completeClientUpdate(@Valid Waiter waiter, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
+    public String postUpdate(@Valid Waiter waiter, BindingResult bindingResult, Model model, @RequestParam("id") int id) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("waiter", waiter);
             return "/waiter/update";
@@ -67,13 +67,13 @@ public class WaiterController {
     }
 
     @GetMapping("/waiter/add")
-    public String showClientAddPage(Model model) {
+    public String getAdd(Model model) {
         model.addAttribute("waiter", new Waiter());
         return "/waiter/add";
     }
 
     @PostMapping("/waiter/add")
-    public String completeClientAdd(@Valid Waiter waiter, BindingResult bindingResult, Model model) {
+    public String postAdd(@Valid Waiter waiter, BindingResult bindingResult, Model model) {
         if (bindingResult.hasFieldErrors()) {
             model.addAttribute("waiter", waiter);
             return "/waiter/add";
@@ -88,7 +88,7 @@ public class WaiterController {
     }
 
     @GetMapping("/waiter/delete")
-    public String deleteClient(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") int id) {
         try {
             waiterRepository.delete(id);
         } catch (Exception e) {
